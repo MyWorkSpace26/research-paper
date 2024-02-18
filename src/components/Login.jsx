@@ -6,11 +6,16 @@ export default function Login() {
     password: "",
   });
 
+  const [didEdit, setDidEdit] = useState({
+    email: false,
+    password: false,
+  });
+
   const emailIsInvalid =
-    enteredValues.email !== "" && !validator.isEmail(enteredValues.email);
+    didEdit.email && !validator.isEmail(enteredValues.email);
 
   const passwordIsInvalid =
-    enteredValues.password !== "" &&
+    didEdit.password &&
     !validator.isStrongPassword(enteredValues.password, {
       minLength: 8,
       minLowercase: 1,
@@ -24,6 +29,17 @@ export default function Login() {
       ...prevValues,
       [identifier]: value,
     }));
+    setDidEdit((pervEdit) => ({
+      ...pervEdit,
+      [identifier]: false,
+    }));
+  }
+
+  function handelInputBlur(identifier) {
+    setDidEdit((pervEdit) => ({
+      ...pervEdit,
+      [identifier]: true,
+    }));
   }
 
   function handleSubmit(event) {
@@ -34,6 +50,7 @@ export default function Login() {
 
   function reset() {
     setEnteredValues({ email: "", password: "" });
+    setDidEdit(false);
   }
 
   return (
@@ -47,6 +64,7 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
+            onBlur={() => handelInputBlur("email")}
             onChange={(event) => handelInputChange("email", event.target.value)}
             value={enteredValues.email}
           />
@@ -63,6 +81,7 @@ export default function Login() {
             id="password"
             type="password"
             name="password"
+            onBlur={() => handelInputBlur("password")}
             onChange={(event) =>
               handelInputChange("password", event.target.value)
             }
