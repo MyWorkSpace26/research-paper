@@ -5,11 +5,6 @@ export default function Login() {
     password: "",
   });
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(enteredValues);
-  }
-
   function handelInputChange(identifier, value) {
     setEnteredValues((prevValues) => ({
       ...prevValues,
@@ -17,13 +12,23 @@ export default function Login() {
     }));
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(enteredValues);
+    event.target.reset();
+  }
+
+  function reset() {
+    setEnteredValues({ email: "", password: "" });
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <h2>Зайти в личный кабинет</h2>
 
       <div className="control-row">
         <div className="control no-margin">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Электронная почта</label>
           <input
             id="email"
             type="email"
@@ -34,7 +39,7 @@ export default function Login() {
         </div>
 
         <div className="control no-margin">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Пароль</label>
           <input
             id="password"
             type="password"
@@ -48,8 +53,12 @@ export default function Login() {
       </div>
 
       <p className="form-actions">
-        <button className="button button-flat">Reset</button>
-        <button className="button">Login</button>
+        <button type="reset" className="button button-flat" onClick={reset}>
+          Сброс
+        </button>
+        <button type="submit" className="button">
+          Зайти
+        </button>
       </p>
     </form>
   );
