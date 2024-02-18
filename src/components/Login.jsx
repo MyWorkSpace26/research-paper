@@ -1,9 +1,23 @@
 import { useState } from "react";
+import validator from "validator";
 export default function Login() {
   const [enteredValues, setEnteredValues] = useState({
     email: "",
     password: "",
   });
+
+  const emailIsInvalid =
+    enteredValues.email !== "" && !validator.isEmail(enteredValues.email);
+
+  const passwordIsInvalid =
+    enteredValues.password !== "" &&
+    !validator.isStrongPassword(enteredValues.password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    });
 
   function handelInputChange(identifier, value) {
     setEnteredValues((prevValues) => ({
@@ -36,6 +50,11 @@ export default function Login() {
             onChange={(event) => handelInputChange("email", event.target.value)}
             value={enteredValues.email}
           />
+          <div className="control-error">
+            {emailIsInvalid && (
+              <p>Пожалуйста, введите действительный адрес электронной почты.</p>
+            )}
+          </div>
         </div>
 
         <div className="control no-margin">
@@ -49,6 +68,14 @@ export default function Login() {
             }
             value={enteredValues.password}
           />
+          <div className="control-error">
+            {passwordIsInvalid && (
+              <p>
+                Пожалуйста, введите действительный Пароль (не менее 8 символов и
+                содержит 1 заглавную букву и 1 цифра).
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
