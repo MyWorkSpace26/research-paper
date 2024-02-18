@@ -11,6 +11,8 @@ export default function Login() {
     password: false,
   });
 
+  const [isRest, setIsRest] = useState(false);
+
   const emailIsInvalid =
     didEdit.email && !validator.isEmail(enteredValues.email);
 
@@ -33,6 +35,7 @@ export default function Login() {
       ...pervEdit,
       [identifier]: false,
     }));
+    setIsRest(false);
   }
 
   function handelInputBlur(identifier) {
@@ -44,13 +47,21 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(enteredValues);
     event.target.reset();
+    if (emailIsInvalid || passwordIsInvalid) {
+      return;
+    }
+    if (isRest) {
+      return;
+    }
+    console.log("Sending HTTP request....");
   }
 
   function reset() {
     setEnteredValues({ email: "", password: "" });
     setDidEdit(false);
+    setIsRest(true);
+    console.log("reset");
   }
 
   return (
@@ -81,6 +92,7 @@ export default function Login() {
             id="password"
             type="password"
             name="password"
+            autoComplete="on"
             onBlur={() => handelInputBlur("password")}
             onChange={(event) =>
               handelInputChange("password", event.target.value)
