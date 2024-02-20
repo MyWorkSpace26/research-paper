@@ -13,19 +13,6 @@ export default function Login() {
       minSymbols: 1,
     });
 
-  /////////////*//////////////////*////////////////*
-
-  const [enteredValues, setEnteredValues] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [didEdit, setDidEdit] = useState({
-    email: false,
-    password: false,
-  });
-
-  ////////*****///// */
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -44,38 +31,6 @@ export default function Login() {
     reset: resetPasswordInput,
   } = useInput(isNotEmpty && passwordCondition);
 
-  /*   const emailIsInvalid =
-    didEdit.email && !validator.isEmail(enteredValues.email);
-
-  const passwordIsInvalid =
-    didEdit.password &&
-    !validator.isStrongPassword(enteredValues.password, {
-      minLength: 8,
-      minLowercase: 1,
-      minUppercase: 1,
-      minNumbers: 1,
-      minSymbols: 1,
-    });
- */
-
-  /* function handelInputChange(identifier, value) {
-    setEnteredValues((prevValues) => ({
-      ...prevValues,
-      [identifier]: value,
-    }));
-    setDidEdit((pervEdit) => ({
-      ...pervEdit,
-      [identifier]: false,
-    }));
-  } */
-
-  /*   function handelInputBlur(identifier) {
-    setDidEdit((pervEdit) => ({
-      ...pervEdit,
-      [identifier]: true,
-    }));
-  } */
-
   function handleSubmit(event) {
     event.preventDefault();
     if (!enteredEmailIsValid || !enteredPasswordIsValid) {
@@ -85,13 +40,9 @@ export default function Login() {
     console.log("Sending HTTP request....");
     resetEmailInput();
     resetPasswordInput();
-    setEnteredValues({ email: enteredEmail, password: "" });
-    setDidEdit({ email: false, password: false });
   }
 
   function reset() {
-    /* setEnteredValues({ email: "", password: "" });
-    setDidEdit({ email: false, password: false }); */
     resetEmailInput();
     resetPasswordInput();
   }
@@ -108,11 +59,8 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
-            //onBlur={() => handelInputBlur("email")}
             onBlur={emailBlurHandler}
-            //onChange={(event) => handelInputChange("email", event.target.value)}
             onChange={emailChangeHandler}
-            //value={enteredValues.email}
             value={enteredEmail}
           />
           <div className="control-error">
@@ -129,13 +77,8 @@ export default function Login() {
             type="password"
             name="password"
             autoComplete="on"
-            //onBlur={() => handelInputBlur("password")}
             onBlur={passwordBlurHandler}
-            /* onChange={(event) =>
-              handelInputChange("password", event.target.value)
-            } */
             onChange={passwordChangeHandler}
-            /* value={enteredValues.password} */
             value={enteredPassword}
           />
           <div className="control-error">
