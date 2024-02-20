@@ -11,8 +11,6 @@ export default function Login() {
     password: false,
   });
 
-  const [isRest, setIsRest] = useState(false);
-
   const emailIsInvalid =
     didEdit.email && !validator.isEmail(enteredValues.email);
 
@@ -35,7 +33,6 @@ export default function Login() {
       ...pervEdit,
       [identifier]: false,
     }));
-    setIsRest(false);
   }
 
   function handelInputBlur(identifier) {
@@ -47,22 +44,23 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    event.target.reset();
     if (emailIsInvalid || passwordIsInvalid) {
       return;
     }
-    if (isRest) {
-      return;
-    }
     console.log("Sending HTTP request....");
+    setEnteredValues({ email: "", password: "" });
+    setDidEdit({ email: false, password: false });
   }
 
   function reset() {
     setEnteredValues({ email: "", password: "" });
-    setDidEdit(false);
-    setIsRest(true);
-    console.log("reset");
+    setDidEdit({ email: false, password: false });
   }
+  const isSubmitDisabled =
+    enteredValues.email === "" ||
+    enteredValues.password === "" ||
+    emailIsInvalid ||
+    passwordIsInvalid;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -114,7 +112,7 @@ export default function Login() {
         <button type="reset" className="button button-flat" onClick={reset}>
           Сброс
         </button>
-        <button type="submit" className="button">
+        <button type="submit" className="button" disabled={isSubmitDisabled}>
           Зайти
         </button>
       </p>
