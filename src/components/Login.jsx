@@ -1,6 +1,20 @@
 import { useState } from "react";
 import validator from "validator";
+import useInput from "../hooks/use-input";
 export default function Login() {
+  const isNotEmpty = (value) => value.trim() !== "";
+  const emailCondition = (value) => validator.isEmail(value);
+  const passwordCondition = (value) =>
+    validator.isStrongPassword(value, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    });
+
+  /////////////*//////////////////*////////////////*
+
   const [enteredValues, setEnteredValues] = useState({
     email: "",
     password: "",
@@ -11,7 +25,26 @@ export default function Login() {
     password: false,
   });
 
-  const emailIsInvalid =
+  ////////*****///// */
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: emailInputHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmailInput,
+  } = useInput(isNotEmpty && emailCondition);
+
+  const {
+    value: enteredPassword,
+    isValid: enteredPasswordIsValid,
+    hasError: passwordInputHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: resetPasswordInput,
+  } = useInput(isNotEmpty && passwordCondition);
+
+  /*   const emailIsInvalid =
     didEdit.email && !validator.isEmail(enteredValues.email);
 
   const passwordIsInvalid =
@@ -23,8 +56,9 @@ export default function Login() {
       minNumbers: 1,
       minSymbols: 1,
     });
+ */
 
-  function handelInputChange(identifier, value) {
+  /* function handelInputChange(identifier, value) {
     setEnteredValues((prevValues) => ({
       ...prevValues,
       [identifier]: value,
@@ -33,34 +67,35 @@ export default function Login() {
       ...pervEdit,
       [identifier]: false,
     }));
-  }
+  } */
 
-  function handelInputBlur(identifier) {
+  /*   function handelInputBlur(identifier) {
     setDidEdit((pervEdit) => ({
       ...pervEdit,
       [identifier]: true,
     }));
-  }
+  } */
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (emailIsInvalid || passwordIsInvalid) {
+    if (!enteredEmailIsValid || !enteredPasswordIsValid) {
       return;
     }
+    console.log(enteredEmail);
     console.log("Sending HTTP request....");
-    setEnteredValues({ email: "", password: "" });
+    resetEmailInput();
+    resetPasswordInput();
+    setEnteredValues({ email: enteredEmail, password: "" });
     setDidEdit({ email: false, password: false });
   }
 
   function reset() {
-    setEnteredValues({ email: "", password: "" });
-    setDidEdit({ email: false, password: false });
+    /* setEnteredValues({ email: "", password: "" });
+    setDidEdit({ email: false, password: false }); */
+    resetEmailInput();
+    resetPasswordInput();
   }
-  const isSubmitDisabled =
-    enteredValues.email === "" ||
-    enteredValues.password === "" ||
-    emailIsInvalid ||
-    passwordIsInvalid;
+  const isSubmitDisabled = emailInputHasError || passwordInputHasError;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -73,12 +108,15 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
-            onBlur={() => handelInputBlur("email")}
-            onChange={(event) => handelInputChange("email", event.target.value)}
-            value={enteredValues.email}
+            //onBlur={() => handelInputBlur("email")}
+            onBlur={emailBlurHandler}
+            //onChange={(event) => handelInputChange("email", event.target.value)}
+            onChange={emailChangeHandler}
+            //value={enteredValues.email}
+            value={enteredEmail}
           />
           <div className="control-error">
-            {emailIsInvalid && (
+            {emailInputHasError && (
               <p>Пожалуйста, введите действительный адрес электронной почты.</p>
             )}
           </div>
@@ -91,14 +129,17 @@ export default function Login() {
             type="password"
             name="password"
             autoComplete="on"
-            onBlur={() => handelInputBlur("password")}
-            onChange={(event) =>
+            //onBlur={() => handelInputBlur("password")}
+            onBlur={passwordBlurHandler}
+            /* onChange={(event) =>
               handelInputChange("password", event.target.value)
-            }
-            value={enteredValues.password}
+            } */
+            onChange={passwordChangeHandler}
+            /* value={enteredValues.password} */
+            value={enteredPassword}
           />
           <div className="control-error">
-            {passwordIsInvalid && (
+            {passwordInputHasError && (
               <p>
                 Пожалуйста, введите действительный Пароль (не менее 8 символов и
                 содержит 1 заглавную букву и 1 цифра).
