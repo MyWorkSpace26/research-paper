@@ -1,7 +1,7 @@
 import { useState } from "react";
 import validator from "validator";
-import useInput from "../hooks/use-input";
-export default function Login() {
+import useInput from "../../hooks/use-input";
+export default function Login(props) {
   const isNotEmpty = (value) => value.trim() !== "";
   const emailCondition = (value) => validator.isEmail(value);
   const passwordCondition = (value) =>
@@ -36,10 +36,14 @@ export default function Login() {
     if (!enteredEmailIsValid || !enteredPasswordIsValid) {
       return;
     }
-    console.log(enteredEmail);
+    const LoginData = {
+      email: enteredEmail,
+      password: enteredPassword,
+    };
     console.log("Sending HTTP request....");
     resetEmailInput();
     resetPasswordInput();
+    props.onSendLoginData(LoginData);
   }
 
   function reset() {
