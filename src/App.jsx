@@ -1,10 +1,13 @@
-import Header from "./components/Header.jsx";
+import HeaderLogin from "./components/HeaderLogin.jsx";
 import Login from "./components/Login/Login.jsx";
-import React, { useState, useEffect } from "react";
-import { arrayUsers } from "./components/data.js";
+import React, { useState } from "react";
+import { arrayUsers } from "./components/datausers.js";
+import { useShowInfo } from "./components/Context/ShowInfoContext.jsx";
+import PersonalAcc from "./components/PersonalAccount/PersonalAcc.jsx";
+import { ShowInfoProvider } from "./components/Context/ShowInfoContext.jsx";
 function App() {
   const [startEntered, setStartEntered] = useState(false);
-  const [startShowInfo, setStartShowInfo] = useState(false);
+  const { startShowInfo, setStartShowInfo } = useShowInfo();
   const SendLoginData = async (enteredLoginData) => {
     console.log(enteredLoginData);
 
@@ -40,7 +43,7 @@ function App() {
     </>
   ) : (
     <>
-      <Header />
+      <HeaderLogin />
       <main>
         <Login onSendLoginData={SendLoginData} />
       </main>
@@ -48,7 +51,7 @@ function App() {
   );
 
   let contentShowInformation = startShowInfo ? (
-    <p className="UserNotFound">lets go</p>
+    <PersonalAcc />
   ) : (
     contentRegistration
   );
@@ -56,4 +59,8 @@ function App() {
   return <>{contentShowInformation}</>;
 }
 
-export default App;
+export default () => (
+  <ShowInfoProvider>
+    <App />
+  </ShowInfoProvider>
+);
