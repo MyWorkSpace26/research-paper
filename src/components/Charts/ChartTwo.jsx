@@ -1,12 +1,11 @@
-import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
-import ReactApexChart from 'react-apexcharts';
+import React, { useState } from "react";
+import ReactApexChart from "react-apexcharts";
 
-const options: ApexOptions = {
-  colors: ['#3C50E0', '#80CAEE'],
+const options = {
+  colors: ["#3C50E0", "#80CAEE"],
   chart: {
-    fontFamily: 'Satoshi, sans-serif',
-    type: 'bar',
+    fontFamily: "Satoshi, sans-serif",
+    type: "bar",
     height: 335,
     stacked: true,
     toolbar: {
@@ -23,7 +22,7 @@ const options: ApexOptions = {
         plotOptions: {
           bar: {
             borderRadius: 0,
-            columnWidth: '25%',
+            columnWidth: "25%",
           },
         },
       },
@@ -33,23 +32,23 @@ const options: ApexOptions = {
     bar: {
       horizontal: false,
       borderRadius: 0,
-      columnWidth: '25%',
-      borderRadiusApplication: 'end',
-      borderRadiusWhenStacked: 'last',
+      columnWidth: "25%",
+      borderRadiusApplication: "end",
+      borderRadiusWhenStacked: "last",
     },
   },
   dataLabels: {
     enabled: false,
   },
   xaxis: {
-    categories: ['', '', '', '', '', '', ''],
+    categories: ["", "", "", "", "", "", ""],
   },
   legend: {
-    position: 'top',
-    horizontalAlign: 'left',
-    fontFamily: 'Satoshi',
+    position: "top",
+    horizontalAlign: "left",
+    fontFamily: "Satoshi",
     fontWeight: 500,
-    fontSize: '14px',
+    fontSize: "14px",
     markers: {
       radius: 99,
     },
@@ -59,27 +58,19 @@ const options: ApexOptions = {
   },
 };
 
-interface ChartTwoState {
-  series: {
-    name: string;
-    data: number[];
-  }[];
-}
-
-const ChartTwo: React.FC = () => {
-  const [state, setState] = useState<ChartTwoState>({
+const ChartTwo = () => {
+  const [state, setState] = useState({
     series: [
       {
-        name: 'Успешный эксперимент',
+        name: "Успешный эксперимент",
         data: [10, 7, 11, 8, 6, 15, 8],
       },
       {
-        name: 'Всего экспериментов',
+        name: "Всего экспериментов",
         data: [20, 12, 16, 15, 8, 27, 14],
       },
     ],
   });
-
   const handleReset = () => {
     setState((prevState) => ({
       ...prevState,

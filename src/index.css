@@ -1,13 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 body {
   margin: 0;
   font-family: "Lato", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(#d0d6d9, #b1b4ba);
+  background: linear-gradient(#ffff, #b1b4ba);
   color: #d9e2f1;
   min-height: 100vh;
 }
@@ -166,16 +166,16 @@ fieldset {
 
 .UserNotFound {
   display: flex;
-  justify-content: center; /* Выравнивание по горизонтали */
-  align-items: center; /* Выравнивание по вертикали */
-  height: 85vh; /* Сделать блок на всю высоту видимой области */
+  justify-content: center; 
+  align-items: center; 
+  height: 85vh; 
   color: red;
   font-size: 2em;
 }
 
 .buttonReturnContainer {
   display: flex;
-  justify-content: flex-end; /* Выравнивание по горизонтали вправо */
+  justify-content: flex-end;
 }
 
 .buttonReturn {
@@ -187,3 +187,4 @@ fieldset {
   color: #d9e2f1;
   cursor: pointer;
 }
+ */
