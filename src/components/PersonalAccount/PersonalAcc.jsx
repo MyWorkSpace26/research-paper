@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Loader from "../../common/Loader";
 import PageTitle from "../PageTitle";
 import ECommerce from "../../pages/Dashboard/ECommerce";
+import Calendar from "../../pages/Calendar";
 
 function PersonalAcc() {
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,15 @@ function PersonalAcc() {
             <>
               <PageTitle title="Dashboard" />
               <ECommerce />
+            </>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <>
+              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <Calendar />
             </>
           }
         />
