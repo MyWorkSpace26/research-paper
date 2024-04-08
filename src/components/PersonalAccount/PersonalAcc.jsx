@@ -7,6 +7,7 @@ import Calendar from "../../pages/Calendar";
 import Profile from "../../pages/Profile";
 import Tables from "../../pages/Tables";
 import Settings from "../../pages/Settings";
+import Chart from "../../pages/Chart";
 
 function PersonalAcc() {
   const [loading, setLoading] = useState(true);
@@ -67,6 +68,15 @@ function PersonalAcc() {
             <>
               <PageTitle title="Settings" />
               <Settings />
+            </>
+          }
+        />
+        <Route
+          path="/chart"
+          element={
+            <>
+              <PageTitle title="Charts" />
+              <Chart />
             </>
           }
         />
