@@ -6,6 +6,7 @@ import ECommerce from "../../pages/Dashboard/ECommerce";
 import Calendar from "../../pages/Calendar";
 import Profile from "../../pages/Profile";
 import Tables from "../../pages/Tables";
+import Settings from "../../pages/Settings";
 
 function PersonalAcc() {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ function PersonalAcc() {
           index
           element={
             <>
-              <PageTitle title="Dashboard" />
+              <PageTitle title="Personal Account" />
               <ECommerce />
             </>
           }
@@ -37,7 +38,7 @@ function PersonalAcc() {
           path="/calendar"
           element={
             <>
-              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Calendar" />
               <Calendar />
             </>
           }
@@ -46,7 +47,7 @@ function PersonalAcc() {
           path="/profile"
           element={
             <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Profile" />
               <Profile />
             </>
           }
@@ -55,8 +56,17 @@ function PersonalAcc() {
           path="/tables"
           element={
             <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="Tables" />
               <Tables />
+            </>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <>
+              <PageTitle title="Settings" />
+              <Settings />
             </>
           }
         />

@@ -1,7 +1,6 @@
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import userThree from '../images/user/user-03.png';
-import DefaultLayout from '../layout/DefaultLayout';
-import userSix from '../images/user/user-06.png';
+import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "../layout/DefaultLayout";
+import userSix from "../images/user/user-06.png";
 const Settings = () => {
   return (
     <DefaultLayout>
@@ -229,7 +228,7 @@ const Settings = () => {
                       <p>
                         <span className="text-primary">
                           Нажмите, чтобы загрузить
-                        </span>{' '}
+                        </span>{" "}
                         или перетаскивать
                       </p>
                       <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
