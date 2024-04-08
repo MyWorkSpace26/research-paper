@@ -4,6 +4,7 @@ import Loader from "../../common/Loader";
 import PageTitle from "../PageTitle";
 import ECommerce from "../../pages/Dashboard/ECommerce";
 import Calendar from "../../pages/Calendar";
+import Profile from "../../pages/Profile";
 
 function PersonalAcc() {
   const [loading, setLoading] = useState(true);
@@ -37,6 +38,15 @@ function PersonalAcc() {
             <>
               <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <Calendar />
+            </>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <>
+              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <Profile />
             </>
           }
         />
