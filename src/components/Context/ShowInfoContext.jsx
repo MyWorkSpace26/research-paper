@@ -5,7 +5,7 @@ const ShowInfoContext = createContext();
 export const useShowInfo = () => useContext(ShowInfoContext);
 
 export const ShowInfoProvider = ({ children }) => {
-  const [startShowInfo, setStartShowInfo] = useState(true);
+  const [startShowInfo, setStartShowInfo] = useState(false);
 
   return (
     <ShowInfoContext.Provider value={{ startShowInfo, setStartShowInfo }}>

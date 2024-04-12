@@ -1,23 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
+
 body {
   margin: 0;
   font-family: "Lato", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(#ffff, #b1b4ba);
   color: #d9e2f1;
   min-height: 100vh;
 }
 
-header {
+.headercss {
   margin: 2rem 0;
   text-align: center;
 }
 
-header img {
+.header-img {
   width: 5rem;
   display: ruby;
   height: 5rem;
@@ -27,7 +26,7 @@ header img {
   filter: drop-shadow(0 0 4px rgba(31, 42, 42, 0.5));
 }
 
-header h1 {
+.header-h1 {
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
   font-size: 3rem;
@@ -36,7 +35,7 @@ header h1 {
   color: #2f4444;
 }
 
-form {
+.form-user {
   width: 90%;
   max-width: 40rem;
   margin: 3rem auto;
@@ -166,9 +165,9 @@ fieldset {
 
 .UserNotFound {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  height: 85vh; 
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
   color: red;
   font-size: 2em;
 }
@@ -187,4 +186,3 @@ fieldset {
   color: #d9e2f1;
   cursor: pointer;
 }
- */

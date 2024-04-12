@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState, useContext } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import userSix from "../../images/user/user-06.png";
-import LogoutContext from "../Context/LogoutContext"; // Импортируйте контекст
-
+import { useShowInfo } from "../Context/ShowInfoContext.jsx";
 const DropdownUser = () => {
-  const { setIsLogout } = useContext(LogoutContext);
+  const { setStartShowInfo } = useShowInfo();
 
   const handlerlogout = () => {
-    setIsLogout(true); // Обновляем состояние isLogout в контексте
-    console.log("1111");
+    setStartShowInfo(false); // Обновляем состояние isLogout в контексте
   };
   const [dropdownOpen, setDropdownOpen] = useState(false);
 

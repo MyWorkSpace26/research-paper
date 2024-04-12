@@ -53,7 +53,7 @@ export default function Login(props) {
   const isSubmitDisabled = emailInputHasError || passwordInputHasError;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="form-user" onSubmit={handleSubmit}>
       <h2>Зайти в личный кабинет</h2>
 
       <div className="control-row">

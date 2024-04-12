@@ -5,7 +5,6 @@ import { arrayUsers } from "./components/datausers.js";
 import { useShowInfo } from "./components/Context/ShowInfoContext.jsx";
 import PersonalAcc from "./components/PersonalAccount/PersonalAcc.jsx";
 import { ShowInfoProvider } from "./components/Context/ShowInfoContext.jsx";
-import { RouterProvider } from "./components/Context/LocationContext.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 function App() {
   const [startEntered, setStartEntered] = useState(false);
