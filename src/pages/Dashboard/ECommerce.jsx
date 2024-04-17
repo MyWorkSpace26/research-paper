@@ -2,6 +2,7 @@ import React from "react";
 import ChartOne from "../../components/Charts/ChartOne";
 import ChartTwo from "../../components/Charts/ChartTwo";
 import ChatCard from "../../components/Chat/ChatCard";
+import ExcelChart from "../../components/Charts/ExcelChart";
 import TableOne from "../../components/Tables/TableOne";
 import CardDataStats from "../../components/CardDataStats";
 import DefaultLayout from "../../layout/DefaultLayout";
@@ -88,6 +89,7 @@ const ECommerce = () => {
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
+        <ExcelChart />
         <div className="col-span-12 xl:col-span-8">
           <TableOne />
         </div>
