@@ -1,7 +1,12 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../layout/DefaultLayout";
 import userSix from "../images/user/user-06.png";
+import employees from "../components/datausers";
 const Settings = () => {
+  const findEmployeeByName = (fullName) => {
+    return employees.find((employee) => employee.fullName === fullName);
+  };
+  const employeeNikolay = findEmployeeByName("Николай Петрович Кузнецов");
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-270">
@@ -56,8 +61,8 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
-                          placeholder="Николай Петрович Кузнецов"
-                          defaultValue="Николай Петрович Кузнецов"
+                          placeholder={employeeNikolay.fullName}
+                          defaultValue={employeeNikolay.fullName}
                         />
                       </div>
                     </div>
@@ -74,8 +79,8 @@ const Settings = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
-                        placeholder="+7 (985) 334-78-65"
-                        defaultValue="+7 (985) 334-78-65"
+                        placeholder={employeeNikolay.phoneNumber}
+                        defaultValue={employeeNikolay.phoneNumber}
                       />
                     </div>
                   </div>
@@ -118,8 +123,8 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
-                        placeholder="Nikolay45@mail.ru"
-                        defaultValue="Nikolay45@mail.ru"
+                        placeholder={employeeNikolay.email}
+                        defaultValue={employeeNikolay.email}
                       />
                     </div>
                   </div>
@@ -136,8 +141,8 @@ const Settings = () => {
                       type="text"
                       name="Username"
                       id="Username"
-                      placeholder="Nikolay45"
-                      defaultValue="Nikolay45"
+                      placeholder={employeeNikolay.username}
+                      defaultValue={employeeNikolay.username}
                     />
                   </div>
 
