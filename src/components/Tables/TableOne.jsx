@@ -1,154 +1,138 @@
 import { useState } from "react";
+import ChartResult from "../Charts/ChartResult";
+
+// Компонент для отображения дополнительной информации о выбранном результате эксперимента
+const ExperimentDetails = ({ result }) => {
+  let copm = "";
+  if (result === "TiN") {
+    copm = <ChartResult numberChart={0} nameChart={"TiN"} />;
+  } else if (result === "TiN - Epilam") {
+    copm = <ChartResult numberChart={1} nameChart={"TiN - Epilam"} />;
+  } else if (result === "TiN - DLC") {
+    copm = <ChartResult numberChart={2} nameChart={"TiN - DLC"} />;
+  } else if (result === "(CrAlSi)N") {
+    copm = <ChartResult numberChart={3} nameChart={"(CrAlSi)N"} />;
+  } else if (result === "(CrAlSi)N - Epilam") {
+    copm = <ChartResult numberChart={4} nameChart={"(CrAlSi)N - Epilam"} />;
+  } else if (result === "(CrAlSi)N - DLC") {
+    copm = <ChartResult numberChart={5} nameChart={"(CrAlSi)N - DLC"} />;
+  }
+  // Здесь можно добавить логику для отображения дополнительной информации о выбранном результате
+  return (
+    <div className="bg-white p-4 rounded shadow">
+      <h2 className="text-lg font-semibold mb-2">
+        Дополнительная информация о результате: {result}
+      </h2>
+      <p>
+        Здесь могут быть дополнительные данные о результате эксперимента {copm}
+      </p>
+    </div>
+  );
+};
+
 const TableOne = () => {
   const [experimentData, setExperimentData] = useState([
     {
-      material: "Сталь",
-      tool: "Карбид",
-      speed: 3000,
-      feed: 0.15,
-      depth: 2,
-      result: "Хороший",
+      experiment: "TiN",
+      status: "Успешный",
+      result: ["TiN", "TiN - Epilam", "TiN - DLC"],
     },
     {
-      material: "Алюминий",
-      tool: "Cталь",
-      speed: 5000,
-      feed: 0.25,
-      depth: 3,
-      result: "Приемлемый",
+      experiment: "(CrAlSi)N",
+      status: "Приемлемый",
+      result: ["(CrAlSi)N", "(CrAlSi)N - Epilam", "(CrAlSi)N - DLC"],
     },
-    {
-      material: "Чугун",
-      tool: "Алмаз",
-      speed: 4000,
-      feed: 0.2,
-      depth: 2.5,
-      result: "Отличный",
-    },
-    {
-      material: "Пластик",
-      tool: "Поликарбонат",
-      speed: 2000,
-      feed: 0.1,
-      depth: 1.5,
-      result: "Неплохой",
-    },
-    {
-      material: "Дерево",
-      tool: "Твердосплавный",
-      speed: 2500,
-      feed: 0.12,
-      depth: 2.8,
-      result: "Удовлетворительный",
-    },
-    {
-      material: "Стекло",
-      tool: "Алмазный",
-      speed: 1500,
-      feed: 0.08,
-      depth: 1,
-      result: "Слабый",
-    },
-    {
-      material: "Медь",
-      tool: "Алмаз",
-      speed: 3500,
-      feed: 0.18,
-      depth: 2.2,
-      result: "Хороший",
-    },
-    {
-      material: "Керамика",
-      tool: "Карбид",
-      speed: 2800,
-      feed: 0.14,
-      depth: 2.3,
-      result: "Отличный",
-    },
-    {
-      material: "Бетон",
-      tool: "Алмазный",
-      speed: 1800,
-      feed: 0.1,
-      depth: 2.5,
-      result: "Средний",
-    },
-    {
-      material: "Полиэтилен",
-      tool: "Сталь",
-      speed: 2200,
-      feed: 0.11,
-      depth: 1.8,
-      result: "Удовлетворительный",
-    },
+    // Добавьте остальные данные экспериментов здесь
   ]);
+
+  // Состояние для хранения выбранного результата эксперимента для отображения деталей
+  const [selectedResult, setSelectedResult] = useState(null);
+
+  // Функция для открытия деталей выбранного результата эксперимента
+  const handleExperimentDetails = (result) => {
+    setSelectedResult(result);
+  };
+
+  // Функция для закрытия деталей выбранного результата эксперимента
+  const handleCloseExperimentDetails = () => {
+    setSelectedResult(null);
+  };
+
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        Результаты экспериментов
+    <div className="rounded-md border border-gray-300 bg-white px-4 py-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-6 xl:py-4">
+      <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+        Эксперименты
       </h4>
 
-      <div className="flex flex-col">
-        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-          <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Материал
-            </h5>
-          </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Инструмент
-            </h5>
-          </div>
-          <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Скорость
-            </h5>
-          </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Кормить
-            </h5>
-          </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Глубина
-            </h5>
-          </div>
-        </div>
-
-        {experimentData.map((experiment, key) => (
-          <div
-            className={`grid grid-cols-6 ${
-              key === experimentData.length - 1
-                ? ""
-                : "border-b border-stroke dark:border-strokedark"
-            }`}
-            key={key}
-          >
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">
-                {experiment.material}
-              </p>
-            </div>
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{experiment.tool}</p>
-            </div>
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{experiment.speed}</p>
-            </div>
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{experiment.feed}</p>
-            </div>
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{experiment.depth}</p>
-            </div>
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{experiment.result}</p>
-            </div>
-          </div>
-        ))}
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+          <thead className="bg-gray-100 dark:bg-meta-4">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                Название
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                Статус
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                Результаты
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200 dark:bg-boxdark dark:divide-gray-800">
+            {experimentData.map((experiment, index) => (
+              <tr
+                key={index}
+                className="hover:bg-gray-50 dark:hover:bg-boxdark"
+              >
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {experiment.experiment}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {/* {experiment.status} */}
+                  <p
+                    className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
+                      experiment.status === "Успешный"
+                        ? "bg-success text-success"
+                        : experiment.status === "Неудачный"
+                        ? "bg-danger text-danger"
+                        : experiment.status === "В процессе"
+                        ? "bg-warning text-warning"
+                        : "bg-primary text-primary"
+                    }`}
+                  >
+                    {experiment.status}
+                  </p>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {experiment.result.map((res, idx) => (
+                    <p
+                      key={idx}
+                      className="text-blue-500 cursor-pointer hover:underline"
+                      onClick={() => handleExperimentDetails(res)}
+                    >
+                      {res}
+                    </p>
+                  ))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+
+      {/* Показываем компонент с дополнительной информацией, если выбран какой-то результат */}
+      {selectedResult && (
+        <div className="mt-4">
+          <ExperimentDetails result={selectedResult} />
+          <button
+            onClick={handleCloseExperimentDetails}
+            className="mt-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:bg-gray-300"
+          >
+            Закрыть
+          </button>
+        </div>
+      )}
     </div>
   );
 };

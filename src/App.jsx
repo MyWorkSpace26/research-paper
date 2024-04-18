@@ -5,6 +5,7 @@ import { arrayUsers } from "./components/datausers.js";
 import { useShowInfo } from "./components/Context/ShowInfoContext.jsx";
 import PersonalAcc from "./components/PersonalAccount/PersonalAcc.jsx";
 import { ShowInfoProvider } from "./components/Context/ShowInfoContext.jsx";
+import { DataProvider } from "./components/Context/ChartDataContext.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 function App() {
   const [startEntered, setStartEntered] = useState(false);
@@ -52,9 +53,11 @@ function App() {
   );
 
   let contentShowInformation = startShowInfo ? (
-    <Router>
-      <PersonalAcc />
-    </Router>
+    <DataProvider>
+      <Router>
+        <PersonalAcc />
+      </Router>
+    </DataProvider>
   ) : (
     contentRegistration
   );
