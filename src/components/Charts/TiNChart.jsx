@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const ExcelChart = () => {
+const TiNChart = () => {
   const [chartData, setChartData] = useState({
     options: {
       chart: {
@@ -338,4 +338,4 @@ const ExcelChart = () => {
   );
 };
 
-export default ExcelChart;
+export default TiNChart;
