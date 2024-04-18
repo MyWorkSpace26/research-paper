@@ -10,6 +10,12 @@ const ExcelChart = () => {
       xaxis: {
         categories: [],
       },
+      markers: {
+        size: 6,
+        hover: {
+          sizeOffset: 4,
+        },
+      },
     },
     series: [], // Initialize series as an empty array
   });
@@ -82,6 +88,9 @@ const ExcelChart = () => {
             },
             xaxis: {
               categories: labels,
+              title: {
+                text: "Time (s)", // Добавляем название оси X
+              },
               labels: {
                 formatter: function (val) {
                   if (val !== undefined) {
@@ -89,6 +98,14 @@ const ExcelChart = () => {
                   }
                   return val; // Возвращаем значение без изменений, если оно undefined
                 },
+              },
+            },
+            yaxis: {
+              title: {
+                text: "Cutting Force, Fz (N)", // Добавляем название оси Y
+              },
+              labels: {
+                show: false, // Скрыть метки на оси Y
               },
             },
           },
@@ -110,7 +127,7 @@ const ExcelChart = () => {
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-9">
-      <h2 className="text-xl font-semibold mb-4">Excel Chart</h2>
+      <h2 className="text-xl font-semibold mb-4">TiN</h2>
       <div id="chartOne" className="-ml-5">
         <ReactApexChart
           options={chartData.options}
