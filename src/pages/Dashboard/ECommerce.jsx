@@ -5,6 +5,7 @@ import ChatCard from "../../components/Chat/ChatCard";
 import TableOne from "../../components/Tables/TableOne";
 import CardDataStats from "../../components/CardDataStats";
 import DefaultLayout from "../../layout/DefaultLayout";
+import TableUsres from "../../components/Tables/TableUsres";
 
 const ECommerce = () => {
   return (
@@ -93,6 +94,10 @@ const ECommerce = () => {
           <TableOne />
         </div>
         <ChatCard />
+      </div>
+      <br></br>
+      <div className="col-span-12 xl:col-span-8">
+        <TableUsres />
       </div>
     </DefaultLayout>
   );

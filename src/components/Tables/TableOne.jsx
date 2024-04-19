@@ -188,10 +188,20 @@ const TableOne = () => {
         const sheet = workbook.Sheets[sheetName];
         const Datafile = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
+        // Проверяем, существует ли уже такой результат в experimentData
+        const newFileName = file.name.split(".").slice(0, -1).join(".");
+        const resultExists = experimentData.some((experiment) =>
+          experiment.result.includes(newFileName)
+        );
+
+        if (resultExists) {
+          alert("Такой результат эксперимента уже существует.");
+          return;
+        }
+
         // Обновляем состояние данных через функцию из контекста
         setChartDataFromContext((prevData) => [...prevData, Datafile]);
         let counter = chartDataFromContext.length;
-        const newFileName = file.name.split(".").slice(0, -1).join("."); // Имя файла без расширения
         const newResult = {
           result: newFileName,
           indexExper: counter,
@@ -213,16 +223,33 @@ const TableOne = () => {
       };
 
       reader.readAsArrayBuffer(file);
+      alert("Результат эксперимента добавлен успешно.");
       setShowAddExperiment(!showAddExperiment);
     };
 
     return (
-      <div>
-        <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+      <div className="max-w-md mx-auto mt-8 p-4 border border-gray-200 rounded-lg shadow-md">
+        <label
+          htmlFor="fileInput"
+          className="block mb-4 text-lg font-medium text-gray-800"
+        >
+          Выберите файл Excel (.xlsx, .xls):
+        </label>
+        <input
+          id="fileInput"
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={handleFileUpload}
+          className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-gray-200"
+        />
         {fileData && (
-          <div>
-            <h3>Данные из загруженного файла:</h3>
-            <pre>{JSON.stringify(fileData, null, 2)}</pre>
+          <div className="mt-4">
+            <h3 className="text-lg font-medium text-gray-800 mb-2">
+              Данные из загруженного файла:
+            </h3>
+            <pre className="bg-gray-100 p-4 rounded-md">
+              {JSON.stringify(fileData, null, 2)}
+            </pre>
           </div>
         )}
       </div>
@@ -341,7 +368,9 @@ const TableOne = () => {
                     </button>
                     {showConfirmDeleteModal && (
                       <ConfirmDeleteModal
-                        experimentName={experimentData[indexDelete].experiment}
+                        experimentName={
+                          experimentData[indexExperiment].experiment
+                        }
                         onCancel={handleCancelDelete}
                         onDelete={handleConfirmDelete}
                       />
