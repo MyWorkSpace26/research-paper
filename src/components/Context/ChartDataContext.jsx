@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const DataContext = createContext();
 
@@ -1637,5 +1637,13 @@ export const DataProvider = ({ children }) => {
     ],
   ];
 
-  return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
+  const [chartDataFromContext, setChartDataFromContext] = useState(data);
+
+  return (
+    <DataContext.Provider
+      value={{ chartDataFromContext, setChartDataFromContext }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
 };

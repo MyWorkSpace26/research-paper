@@ -4,7 +4,7 @@ import { useTiNData } from "../Context/ChartDataContext";
 import * as XLSX from "xlsx";
 
 const ChartResult = (props) => {
-  const chartDataFromContext = useTiNData();
+  const { chartDataFromContext, setChartDataFromContext } = useTiNData();
   const [chartData, setChartData] = useState({
     options: {
       chart: {

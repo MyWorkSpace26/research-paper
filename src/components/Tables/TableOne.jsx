@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ChartResult from "../Charts/ChartResult";
-import { useTiNData } from "../Context/ChartDataContext";
+import { useTiNData } from "../Context/ChartDataContext.jsx";
 import * as XLSX from "xlsx";
 // Компонент для отображения дополнительной информации о выбранном результате эксперимента
 const ExperimentDetails = ({ result }) => {
@@ -17,6 +17,8 @@ const ExperimentDetails = ({ result }) => {
     copm = <ChartResult numberChart={4} nameChart={"(CrAlSi)N - Epilam"} />;
   } else if (result === "(CrAlSi)N - DLC") {
     copm = <ChartResult numberChart={5} nameChart={"(CrAlSi)N - DLC"} />;
+  } else if (result === "ExperemintNew") {
+    copm = <ChartResult numberChart={6} nameChart={"ExperemintNew"} />;
   }
   // Здесь можно добавить логику для отображения дополнительной информации о выбранном результате
   return (
@@ -30,7 +32,7 @@ const ExperimentDetails = ({ result }) => {
 };
 
 const TableOne = () => {
-  const chartDataFromContext = useTiNData();
+  const { chartDataFromContext, setChartDataFromContext } = useTiNData();
   const [experimentData, setExperimentData] = useState([
     {
       experiment: "TiN",
@@ -44,7 +46,6 @@ const TableOne = () => {
       result: ["(CrAlSi)N", "(CrAlSi)N - Epilam", "(CrAlSi)N - DLC"],
       indexExper: [3, 4, 5],
     },
-    // Добавьте остальные данные экспериментов здесь
   ]);
 
   // Состояние для хранения выбранного результата эксперимента для отображения деталей
@@ -81,20 +82,19 @@ const TableOne = () => {
       XLSX.writeFile(wb, filename);
     });
   };
-
+  //Deleting
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
-  const [experimentToDelete, setExperimentToDelete] = useState(null);
-  const [indexDelete, setIndexDelete] = useState(0);
+  const [indexExperiment, setIindexExperiment] = useState(0);
 
   const handleDelete = (index) => {
     setShowConfirmDeleteModal(true);
-    setIndexDelete(index);
+    setIindexExperiment(index);
   };
 
   const handleConfirmDelete = () => {
     setShowConfirmDeleteModal(false);
     const updatedExperiments = [...experimentData];
-    updatedExperiments.splice(indexDelete, 1);
+    updatedExperiments.splice(indexExperiment, 1);
     setExperimentData(updatedExperiments);
   };
 
@@ -166,6 +166,68 @@ const TableOne = () => {
       </div>
     );
   };
+  //adding
+  const [showAddExperiment, setShowAddExperiment] = useState(false);
+  const addExperimrntHandler = (index) => {
+    setIindexExperiment(index);
+    setShowAddExperiment(!showAddExperiment);
+  };
+
+  const AddExperimentResult = () => {
+    const { chartDataFromContext, setChartDataFromContext } = useTiNData();
+    const [fileData, setFileData] = useState(null);
+
+    const handleFileUpload = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const Datafile = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        // Обновляем состояние данных через функцию из контекста
+        setChartDataFromContext((prevData) => [...prevData, Datafile]);
+        let counter = chartDataFromContext.length;
+        const newFileName = file.name.split(".").slice(0, -1).join("."); // Имя файла без расширения
+        const newResult = {
+          result: newFileName,
+          indexExper: counter,
+        };
+
+        setExperimentData((prevData) => {
+          // Клонируем предыдущий массив данных экспериментов
+          const newData = [...prevData];
+          // Находим текущий эксперимент
+          const currentExperiment = newData[indexExperiment];
+          // Добавляем новый результат в текущий эксперимент
+          currentExperiment.result.push(newResult.result);
+          currentExperiment.indexExper.push(newResult.indexExper);
+          // Обновляем состояние экспериментов
+          return newData;
+        });
+        // Сохраняем данные файла для отображения
+        setFileData(Datafile);
+      };
+
+      reader.readAsArrayBuffer(file);
+      setShowAddExperiment(!showAddExperiment);
+    };
+
+    return (
+      <div>
+        <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+        {fileData && (
+          <div>
+            <h3>Данные из загруженного файла:</h3>
+            <pre>{JSON.stringify(fileData, null, 2)}</pre>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="rounded-md border border-gray-300 bg-white px-4 py-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-6 xl:py-4">
@@ -229,7 +291,10 @@ const TableOne = () => {
                 </td>
                 <td className="[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                    <button className="hover:text-primary">
+                    <button
+                      onClick={() => addExperimrntHandler(index)}
+                      className="hover:text-primary"
+                    >
                       <svg
                         className="fill-current"
                         width="18"
@@ -310,6 +375,8 @@ const TableOne = () => {
           </tbody>
         </table>
       </div>
+
+      {showAddExperiment && <AddExperimentResult />}
 
       {/* Показываем компонент с дополнительной информацией, если выбран какой-то результат */}
       {selectedResult && (
