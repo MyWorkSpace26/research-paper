@@ -28,30 +28,12 @@ const ChartOne = () => {
     ],
   });
 
-  // Функция для обработки данных перед скачиванием в формате CSV
-  const handleDownloadCSV = () => {
-    let csvContent = "category,TiN,(CrAlSi)N\n";
-    for (let i = 0; i < state.series[0].data.length; i++) {
-      const tinData = state.series[0].data[i];
-      const crAlSiNData = state.series[1].data[i];
-      csvContent += `${i + 1}\t${tinData}\t${crAlSiNData}\n`;
-    }
-
-    const element = document.createElement("a");
-    const file = new Blob([csvContent], { type: "text/csv" });
-    element.href = URL.createObjectURL(file);
-    element.download = "data.csv";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  };
-
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <h2 className="text-xl font-semibold mb-4">
         Отношение числа сотрудников к разным экспериментам
       </h2>
-      <button onClick={handleDownloadCSV}>Скачать CSV</button>
+
       <div>
         <div id="chartOne" className="-ml-5">
           <ReactApexChart

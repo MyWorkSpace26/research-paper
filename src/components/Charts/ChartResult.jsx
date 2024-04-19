@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useTiNData } from "../Context/ChartDataContext";
+import * as XLSX from "xlsx";
 
 const ChartResult = (props) => {
   const chartDataFromContext = useTiNData();
@@ -81,9 +82,29 @@ const ChartResult = (props) => {
     fetchData();
   }, [chartDataFromContext]);
 
+  const handleDownload = () => {
+    const selectedData = chartDataFromContext[props.numberChart];
+
+    const wb = XLSX.utils.book_new();
+
+    const wsData = selectedData.map((row) =>
+      row.map((cell) => (typeof cell === "string" ? cell : "" + cell))
+    );
+
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // Используем название результата эксперимента для имени файла
+    const filename = `${props.nameChart}.xlsx`;
+
+    XLSX.writeFile(wb, filename);
+  };
+
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-9">
       <h2 className="text-xl font-semibold mb-4">{props.nameChart}</h2>
+      <button onClick={handleDownload}>Скачать результат</button>
       <div id="chartOne" className="-ml-5">
         <ReactApexChart
           options={chartData.options}
