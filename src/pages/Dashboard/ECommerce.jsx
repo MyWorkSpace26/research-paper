@@ -6,6 +6,7 @@ import TableOne from "../../components/Tables/TableOne";
 import CardDataStats from "../../components/CardDataStats";
 import DefaultLayout from "../../layout/DefaultLayout";
 import TableUsres from "../../components/Tables/TableUsres";
+import FeedbackForm from "./FeedbackForm";
 
 const ECommerce = () => {
   return (
