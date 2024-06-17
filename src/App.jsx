@@ -1,7 +1,7 @@
 import HeaderLogin from "./components/HeaderLogin.jsx";
 import Login from "./components/Login/Login.jsx";
 import React, { useState } from "react";
-import { arrayUsers } from "./components/datausers.js";
+import employees from "./components/datausers.js";
 import { useShowInfo } from "./components/Context/ShowInfoContext.jsx";
 import PersonalAcc from "./components/PersonalAccount/PersonalAcc.jsx";
 import { ShowInfoProvider } from "./components/Context/ShowInfoContext.jsx";
@@ -14,7 +14,7 @@ function App() {
     console.log(enteredLoginData);
 
     // Проверяем, есть ли пользователь с таким email и password в массиве
-    const userFound = arrayUsers.find(
+    const userFound = employees.find(
       (user) =>
         user.email === enteredLoginData.email &&
         user.password === enteredLoginData.password

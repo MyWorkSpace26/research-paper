@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from "react";
-import TinExp from "../../dataExperiments/TinExp.json"
-import TinEpilamExp from "../../dataExperiments/TinEpilamExp.json"
-import TiNDlsExp from "../../dataExperiments/TinDlsExp.json"
-import CrAlSiNExp from "../../dataExperiments/CrAlSiNExp.json"
-import CrAlSiNEpilamExp from "../../dataExperiments/CrAlSiNEpilamExp.json"
-import CrAlSiNDLCExp from "../../dataExperiments/CrAlSiNDLCExp.json"
+import TinExp from "../../dataExperiments/TinExp.json";
+import TinEpilamExp from "../../dataExperiments/TinEpilamExp.json";
+import TiNDlsExp from "../../dataExperiments/TinDlsExp.json";
+import CrAlSiNExp from "../../dataExperiments/CrAlSiNExp.json";
+import CrAlSiNEpilamExp from "../../dataExperiments/CrAlSiNEpilamExp.json";
+import CrAlSiNDLCExp from "../../dataExperiments/CrAlSiNDLCExp.json";
 
 const DataContext = createContext();
 
@@ -25,7 +25,6 @@ export const DataProvider = ({ children }) => {
 
   */
 
-
   // Объединяем данные из всех файлов JSON
   const combinedData = [
     ...Object.values(TinExp),
@@ -37,15 +36,12 @@ export const DataProvider = ({ children }) => {
     // Добавьте остальные файлы здесь, если нужно
   ];
   // Преобразуем объединенные данные в нужный формат
-  const transformedArray = combinedData.map(array =>
-    array.map(obj => [obj["Time (s)"], obj["Fz (N)"]])
+  const transformedArray = combinedData.map((array) =>
+    array.map((obj) => [obj["time"], obj["fz"]])
   );
 
-
-  
- 
-
-  const [chartDataFromContext, setChartDataFromContext] = useState(transformedArray);
+  const [chartDataFromContext, setChartDataFromContext] =
+    useState(transformedArray);
 
   return (
     <DataContext.Provider

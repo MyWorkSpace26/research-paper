@@ -260,6 +260,24 @@ const TableOne = () => {
     <div className="rounded-md border border-gray-300 bg-white px-4 py-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-6 xl:py-4">
       <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
         Эксперименты
+        <button
+          onClick={() => addExperimrntHandler(index)}
+          className="hover:text-primary"
+        >
+          <svg
+            className="fill-current"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.8047 3.60938L17.3906 5.19531L8.39062 14.1953C8.30343 14.2827 8.23843 14.3868 8.20148 14.5L7.89062 16.5C7.87955 16.5452 7.87402 16.5917 7.87402 16.6387C7.87402 16.7799 7.93634 16.9143 8.04703 17.025L9.97135 18.9492C10.0821 19.0599 10.2165 19.1222 10.3577 19.1222C10.4046 19.1222 10.4511 19.1167 10.4963 19.1056L12.4963 18.7947C12.609 18.7577 12.7131 18.6927 12.8005 18.6055L21.8005 9.60547C22.0131 9.3929 22.0131 9.06913 21.8005 8.85656L19.1438 6.19989C18.9313 5.98732 18.6075 5.98732 18.395 6.19989L9.39502 15.1999C9.38235 15.2126 9.37341 15.2279 9.36831 15.2447L8.29839 16.5317L8.49087 16.3392L15.8047 3.60938ZM16.8047 2.60938L19.3906 5.19531L18.1953 6.39062L15.6094 3.80469L16.8047 2.60938ZM18.3906 7.80469L17.1953 9L7.87402 18.3213L9.16785 19.6151L18.4881 10.2949L18.3906 7.80469ZM20.1953 5L19 6.19531L19.8047 7L21 5.80469L20.1953 5Z"
+              fill=""
+            />
+          </svg>
+        </button>
       </h4>
 
       <div className="overflow-x-auto">
@@ -305,6 +323,7 @@ const TableOne = () => {
                     {experiment.status}
                   </p>
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap">
                   {experiment.result.map((res, idx) => (
                     <p

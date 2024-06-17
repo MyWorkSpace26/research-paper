@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import validator from "validator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import employees from "../datausers";
 
 const EditUserForm = ({ user, onSave, onCancel }) => {
   const [editedUser, setEditedUser] = useState(user);
@@ -11,7 +12,7 @@ const EditUserForm = ({ user, onSave, onCancel }) => {
     const { name, value } = e.target;
     setEditedUser((prevUser) => ({
       ...prevUser,
-      [name]: value,
+      [name]: name === "isAdmin" ? value === "true" : value,
     }));
   };
 
@@ -37,7 +38,6 @@ const EditUserForm = ({ user, onSave, onCancel }) => {
       setError("Пожалуйста, укажите полное имя");
       return;
     }
-
     onSave(editedUser);
     setError("");
   };
@@ -64,7 +64,7 @@ const EditUserForm = ({ user, onSave, onCancel }) => {
       onSubmit={handleSubmit}
       className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-4"
     >
-      <h2 className="text-xl font-bold mb-4">Редактировать пользователя</h2>
+      <h2 className="text-xl font-bold mb-4">Редактирование пользователя</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="mb-4">
         <label
@@ -151,16 +151,34 @@ const EditUserForm = ({ user, onSave, onCancel }) => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
+      <div className="mb-4">
+        <label
+          htmlFor="isAdmin"
+          className="block text-gray-700 text-sm font-bold mb-2"
+        >
+          IsAdmin:
+        </label>
+        <select
+          id="isAdmin"
+          name="isAdmin"
+          value={editedUser.isAdmin}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
 
       <div className="flex items-center justify-between">
         <button
           type="submit"
-          onClick={handleSubmit}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Сохранить
         </button>
         <button
+          type="button"
           onClick={handleCancel}
           className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
@@ -171,43 +189,15 @@ const EditUserForm = ({ user, onSave, onCancel }) => {
   );
 };
 
-const TableUsres = () => {
-  const [arrayUsers, setArrayUsers] = useState([
-    {
-      email: "user1@example.com",
-      password: "Password@1",
-      fullName: "Иванов Иван Иванович",
-      phoneNumber: "+7 (123) 456-78-90",
-      username: "ivan123",
-    },
-    {
-      email: "user2@example.com",
-      password: "Password@2",
-      fullName: "Петров Петр Петрович",
-      phoneNumber: "+7 (987) 654-32-10",
-      username: "petr456",
-    },
-    {
-      email: "user3@example.com",
-      password: "Password@3",
-      fullName: "Сидорова Елена Владимировна",
-      phoneNumber: "+7 (111) 222-33-44",
-      username: "elena_s",
-    },
-    {
-      email: "user4@example.com",
-      password: "Password@4",
-      fullName: "Николай Петрович Кузнецов",
-      phoneNumber: "+7 (985) 334-78-65",
-      username: "Nikolay45",
-    },
-  ]);
+const TableUsers = () => {
+  const [arrayUsers, setArrayUsers] = useState(employees);
   const [user, setUser] = useState({
     email: "",
     password: "",
     fullName: "",
     phoneNumber: "",
     username: "",
+    isAdmin: "false",
   });
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -217,7 +207,7 @@ const TableUsres = () => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
       ...prevUser,
-      [name]: value,
+      [name]: name === "isAdmin" ? value === "true" : value,
     }));
   };
 
@@ -260,6 +250,7 @@ const TableUsres = () => {
       fullName: "",
       phoneNumber: "",
       username: "",
+      isAdmin: "false",
     });
     setError("");
     setShowForm(false); // Закрываем форму после добавления
@@ -272,6 +263,7 @@ const TableUsres = () => {
       fullName: "",
       phoneNumber: "",
       username: "",
+      isAdmin: "false",
     });
     setError("");
     setShowForm(false); // Закрываем форму при отмене
@@ -290,15 +282,18 @@ const TableUsres = () => {
     const index = arrayUsers.findIndex(
       (user) => user.email === editedUser.email
     );
-    if (index !== -1) {
+    if (index === -1) {
       // Создаем новый массив с обновленными данными пользователя
       const updatedUsers = [...arrayUsers];
-      updatedUsers[index] = editedUser;
+      updatedUsers[arrayUsers.length] = editedUser;
       // Обновляем состояние массива пользователей
       setArrayUsers(updatedUsers);
       setShowForm(false);
       alert("Данные были успешно отредактированы.");
+    } else {
+      setError("Пользователь не найден");
     }
+    setShowForm(false);
   };
 
   // Условия для проверок
@@ -347,6 +342,9 @@ const TableUsres = () => {
               Имя пользователя
             </th>
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+              IsAdmin
+            </th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
               Действия
             </th>
           </tr>
@@ -369,6 +367,13 @@ const TableUsres = () => {
               <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                 {user.username}
               </td>
+              <td
+                className={`px-4 py-4 whitespace-nowrap text-sm ${
+                  user.isAdmin ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {user.isAdmin ? "True" : "False"}
+              </td>
               <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
                 <button
                   onClick={() => {
@@ -387,4 +392,4 @@ const TableUsres = () => {
   );
 };
 
-export default TableUsres;
+export default TableUsers;
